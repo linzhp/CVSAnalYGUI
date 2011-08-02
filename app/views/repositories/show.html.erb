@@ -1,0 +1,23 @@
+<h1>Listing commits</h1>
+
+<table>
+  <tr>
+    <th>Revisioin Number</th>
+    <th>Author Date</th>
+    <th>Is Bug Fix?</th>
+  </tr>
+
+<% @commits.each do |commit| %>
+  <tr>
+    <td><%= link_to commit.rev, commit %></td>
+    <td><%= commit.author_date %></td>
+    <td><%= commit.is_bug_fix %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<p><%= will_paginate @commits %></p>
+
+
