@@ -1,13 +1,22 @@
-<table style="float: right">
+<div style="float: left; width: 60%">
+	<pre class="brush: diff;gutter: false;"><%= @patch.patch%></pre>	
+</div>
+<%= form_for @cmt do |f| %>
+	Is Bug Fix? <%= f.radio_button :is_bug_fix, true %>Yes&nbsp;<%= f.radio_button :is_bug_fix, false %>No
+	<%= f.submit 'Save', {:name => 'submit'}%>
+<% end %>
+
+<table style="width: 35%">
 	<tr>
 		<th>Type</th>
 		<th>File</th>
 	</tr>
 <% @actions.each do |action|%>
 	<tr>
-		<td><%= action.action_type %></td>
-		<td><%= link_to action.file, content_url(:commit_id => params[:id], :file_id => action.file_id) %></td>
+		<td align="center"><%= action.action_type %></td>
+		<td style="word-break: break-all">
+			<%= link_to action.file, content_url(:commit_id => params[:id], :file_id => action.file_id) %>
+		</td>
 	</tr>
 <% end %>
 </table>
-<pre class="brush: diff;gutter: false;"><%= @patch.patch%></pre>

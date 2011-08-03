@@ -4,13 +4,8 @@ class CommitsController < ApplicationController
   def show
     @patch = Patch.find(:first, :conditions=>{:commit_id => params[:id]})
     @actions = Action.where(:commit_id => params[:id])
+    @cmt = Commit.find(params[:id])
   end
-
-  # GET /commits/1/edit
-  def edit
-    @commit = Commit.find(params[:id])
-  end
-
 
   # PUT /commits/1
   # PUT /commits/1.xml
@@ -19,10 +14,10 @@ class CommitsController < ApplicationController
 
     respond_to do |format|
       if @commit.update_attributes(params[:commit])
-        format.html { redirect_to(@commit, :notice => 'Commit was successfully updated.') }
+        format.html { redirect_to(@commit.repository, :notice => 'Commit was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => "show" }
         format.xml  { render :xml => @commit.errors, :status => :unprocessable_entity }
       end
     end
