@@ -1,1 +1,13 @@
+<table style="float: right">
+	<tr>
+		<th>Type</th>
+		<th>File</th>
+	</tr>
+<% @actions.each do |action|%>
+	<tr>
+		<td><%= action.action_type %></td>
+		<td><%= link_to action.file, content_url(:commit_id => params[:id], :file_id => action.file_id) %></td>
+	</tr>
+<% end %>
+</table>
 <pre class="brush: diff;gutter: false;"><%= @patch.patch%></pre>
