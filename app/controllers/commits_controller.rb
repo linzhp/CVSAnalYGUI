@@ -13,11 +13,11 @@ class CommitsController < ApplicationController
   # GET /commits/1
   # GET /commits/1.xml
   def show
-    @commit = Commit.find(params[:id])
+    @patch = Patch.find(:first, :conditions=>{:commit_id => params[:id]})
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @commit }
+      format.xml  { render :xml => @patch }
     end
   end
 
