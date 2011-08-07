@@ -9,7 +9,7 @@
 <% @repositories.each do |repository| %>
   <tr>
     <td><%= link_to repository.name, repository %></td>
-    <td><%= repository.repo_type %></td>
+    <td align="center"><%= repository.repo_type %></td>
   </tr>
 <% end %>
 </table>
