@@ -2,14 +2,14 @@
 <p id="notice"><%= notice %></p>
 <table>
   <tr>
-    <th>Revisioin Number</th>
+    <th>Commit ID</th>
     <th>Author Date</th>
     <th>Is Bug Fix?</th>
   </tr>
 
 <% @commits.each do |commit| %>
   <tr>
-    <td><%= link_to commit.rev, commit %></td>
+    <td align="center"><%= link_to commit.id, commit %></td>
     <td><%= commit.author_date %></td>
     <td align="center"><%= commit.is_bug_fix %></td>
   </tr>
