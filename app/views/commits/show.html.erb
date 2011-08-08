@@ -1,10 +1,9 @@
-<div style="float: left; width: 60%">
+<div style="float: left; width: 60%; margin-right: 5%">
 	<pre class="brush: diff;gutter: false;"><%= @patch.patch%></pre>	
 </div>
-<%= form_for @cmt do |f| %>
-	Is Bug Fix? <%= f.radio_button :is_bug_fix, true %>Yes&nbsp;<%= f.radio_button :is_bug_fix, false %>No
-	<%= f.submit 'Save', {:name => 'submit'}%>
-<% end %>
+
+<h4>Commit Log</h4>
+<p><%= @cmt.message %></p>
 
 <table style="width: 35%">
 	<tr>
@@ -14,9 +13,34 @@
 <% @actions.each do |action|%>
 	<tr>
 		<td align="center"><%= action.action_type %></td>
-		<td style="word-break: break-all">
+		<td align="center" style="word-break: break-all">
 			<%= link_to action.file, content_url(:commit_id => params[:id], :file_id => action.file_id) %>
 		</td>
 	</tr>
 <% end %>
 </table>
+<p><%= will_paginate @actions %></p>
+
+<%= form_for @cmt do |f| %>
+	Is Bug Fix? <%= f.radio_button :is_bug_fix, true %>Yes&nbsp;<%= f.radio_button :is_bug_fix, false %>No
+	<%= f.submit 'Save', {:name => 'submit'}%>
+<% end %>
+
+<% if @cmt.is_bug_fix %>
+	<h4>Bug Introuducing Commits</h4>
+	<ul>
+	<% @cmt.bug_introducing_commits.each do |c| %>
+		<li><%= link_to c.id, c%></li>
+	<% end %>		
+	</ul>
+<% end %>
+
+<% if @cmt.is_buggy %>
+	<h4>Bug Fixing Commits</h4>
+	<ul>
+	<% @cmt.bug_fixing_commits.each do |c| %>
+		<li><%= link_to c.id, c%></li>
+	<% end %>		
+	</ul>
+<% end %>
+

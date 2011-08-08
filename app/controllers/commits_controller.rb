@@ -3,7 +3,7 @@ class CommitsController < ApplicationController
   # GET /commits/1
   def show
     @patch = Patch.find(:first, :conditions=>{:commit_id => params[:id]})
-    @actions = Action.where(:commit_id => params[:id])
+    @actions = Action.paginate(:page => params[:page], :per_page => 10, :conditions=>{:commit_id => params[:id]})
     @cmt = Commit.find(params[:id])
   end
 
