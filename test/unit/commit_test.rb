@@ -16,6 +16,10 @@ class CommitTest < ActiveSupport::TestCase
   end
   
   test "bug fixing commits" do
-    assert_equal @commit2.id, @commit1.bug_fixing_commits.first.id
+    assert_equal @commit2.id, @commit1.bug_fixing_commits[0].id
+  end
+  
+  test "bug introducing commits" do
+    assert_equal @commit1.id, @commit2.bug_introducing_commits[0].id
   end
 end

@@ -4,6 +4,7 @@ class Commit < ActiveRecord::Base
   set_table_name 'scmlog'
   belongs_to :repository
   has_many :hunk_blames, :foreign_key => 'bug_commit_id'
+  has_many :hunks
   
   def is_buggy
     bug_fixing_commits.size > 0
@@ -19,6 +20,18 @@ class Commit < ActiveRecord::Base
         end
       end
     end
-    return @bf_commits
+    @bf_commits.to_a
+  end
+  
+  def bug_introducing_commits
+    unless @bi_commits
+      @bi_commits = Set.new
+      hunks.each do |h|
+        h.hunk_blames.each do |hb|
+          @bi_commits.add(hb.bug_commit)
+        end
+      end
+    end
+    @bi_commits.to_a
   end
 end
