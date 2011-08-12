@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20110812055100) do
 
   create_table "action_files", :id => false, :force => true do |t|
     t.integer "file_id"
@@ -20,10 +20,12 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   create_table "actions", :force => true do |t|
-    t.string  "type",      :limit => 1
+    t.string  "type",              :limit => 1
     t.integer "file_id"
     t.integer "commit_id"
     t.integer "branch_id"
+    t.string  "current_file_path"
+    t.string  "patch"
   end
 
   add_index "actions", ["commit_id"], :name => "commit_id"
@@ -163,6 +165,9 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer "bug_commit_id"
   end
 
+  add_index "hunk_blames", ["bug_commit_id"], :name => "index_hunk_blames_on_bug_commit_id"
+  add_index "hunk_blames", ["hunk_id"], :name => "index_hunk_blames_on_hunk_id"
+
   create_table "hunks", :force => true do |t|
     t.integer "file_id"
     t.integer "commit_id",                          :null => false
@@ -173,12 +178,15 @@ ActiveRecord::Schema.define(:version => 0) do
     t.boolean "bug_introducing", :default => false, :null => false
   end
 
+  add_index "hunks", ["commit_id"], :name => "index_hunks_on_commit_id"
   add_index "hunks", ["file_id", "commit_id", "old_start_line", "old_end_line", "new_start_line", "new_end_line"], :name => "file_id", :unique => true
 
   create_table "patches", :force => true do |t|
     t.integer "commit_id"
     t.text    "patch",     :limit => 2147483647
   end
+
+  add_index "patches", ["commit_id"], :name => "commit_id"
 
   create_table "people", :force => true do |t|
     t.string "name"

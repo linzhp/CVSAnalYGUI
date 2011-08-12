@@ -3,6 +3,8 @@ Feedback::Application.routes.draw do
 
   resources :repositories
   
+  resources :actions
+  
   match 'commts/:commit_id/files/:file_id' => 'content#show', :as => :content
 
   # The priority is based upon order of creation:

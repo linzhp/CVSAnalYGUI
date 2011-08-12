@@ -14,7 +14,7 @@
 	<tr>
 		<td align="center"><%= action.action_type %></td>
 		<td align="center" style="word-break: break-all">
-			<%= link_to action.file, content_url(:commit_id => params[:id], :file_id => action.file_id) %>
+			<%= link_to action.file_path, action %>
 		</td>
 	</tr>
 <% end %>
@@ -27,12 +27,16 @@
 <% end %>
 
 <% if @cmt.is_bug_fix %>
-	<h4>Bug Introuducing Commits</h4>
-	<ul>
-	<% @cmt.bug_introducing_commits.each do |c| %>
-		<li><%= link_to c.id, c%></li>
-	<% end %>		
-	</ul>
+	<% if @cmt.bug_introducing_commits.empty? %>
+		No Bug Introuducing Commits found.
+	<% else %>
+		<h4>Bug Introuducing Commits</h4>
+		<ul>
+		<% @cmt.bug_introducing_commits.each do |c| %>
+			<li><%= link_to c.id, c%></li>
+		<% end %>		
+		</ul>
+	<% end %>
 <% end %>
 
 <% if @cmt.is_buggy %>
