@@ -1,4 +1,8 @@
 Feedback::Application.routes.draw do
+  resources :patches
+
+  resources :users
+
   resources :commits
 
   resources :repositories
@@ -56,7 +60,7 @@ Feedback::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "repositories#index", :as => "repositories"
+  root :to => "users#index", :as => "users"
 
   # See how all your routes lay out with "rake routes"
 

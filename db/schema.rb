@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110812055100) do
+ActiveRecord::Schema.define(:version => 20110820161150) do
 
   create_table "action_files", :id => false, :force => true do |t|
     t.integer "file_id"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20110812055100) do
     t.integer "commit_id"
     t.integer "branch_id"
     t.string  "current_file_path"
-    t.string  "patch"
+    t.text    "patch",             :limit => 2147483647
   end
 
   add_index "actions", ["commit_id"], :name => "commit_id"
@@ -224,6 +224,21 @@ ActiveRecord::Schema.define(:version => 20110812055100) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "user_feedbacks", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "commit_id"
+    t.boolean  "buggy"
+    t.boolean  "is_bug_fix"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+<div style="width: 48%; float: right; margin-left: 4%">
+	<h3>Bug Fix</h3>
+	<%= render :partial => 'form', :locals => {:patch => @patch.patch} %>
+</div>
+<div style="width: 48%">
+	<h3>Bug Introducing Changes</h3>
+	<% for p in @patch.bug_introducing_patches %>
+	<%= render :partial => 'form', :locals => {:patch => p.patch}%>
+	<% end %>	
+</div>
+

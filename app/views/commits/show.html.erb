@@ -1,11 +1,7 @@
-<div style="float: left; width: 60%; margin-right: 5%">
-	<pre class="brush: diff;gutter: false;"><%= @patch.patch%></pre>	
-</div>
-
 <h4>Commit Log</h4>
 <p><%= @cmt.message %></p>
 
-<table style="width: 35%">
+<table>
 	<tr>
 		<th>Type</th>
 		<th>File</th>
@@ -14,7 +10,7 @@
 	<tr>
 		<td align="center"><%= action.action_type %></td>
 		<td align="center" style="word-break: break-all">
-			<%= link_to action.file_path, action %>
+			<%= link_to action.current_file_path, patch_path(action.patch) %>
 		</td>
 	</tr>
 <% end %>
@@ -28,9 +24,9 @@
 
 <% if @cmt.is_bug_fix %>
 	<% if @cmt.bug_introducing_commits.empty? %>
-		No Bug Introuducing Commits found.
+		No Bug Introducing Commits found.
 	<% else %>
-		<h4>Bug Introuducing Commits</h4>
+		<h4>Bug Introducing Commits</h4>
 		<ul>
 		<% @cmt.bug_introducing_commits.each do |c| %>
 			<li><%= link_to c.id, c%></li>
