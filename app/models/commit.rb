@@ -36,19 +36,4 @@ class Commit < ActiveRecord::Base
     @bi_commits.to_a
   end
   
-  def num_buggy_feedbacks
-    user_feedbacks.select{|uf| uf.buggy}.size
-  end
-  
-  def num_not_buggy_feedbacks
-    user_feedbacks.select{|uf| not uf.buggy}.size
-  end
-
-  def num_fix_feedbacks
-    user_feedbacks.select{|uf| uf.is_bug_fix}.size
-  end
-
-  def num_not_fix_feedbacks
-    user_feedbacks.select{|uf| not uf.is_bug_fix}.size
-  end
 end
