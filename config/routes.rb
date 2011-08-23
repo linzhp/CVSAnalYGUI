@@ -1,4 +1,6 @@
 Feedback::Application.routes.draw do
+  resources :user_feedbacks
+  
   resources :patches
 
   resources :users

@@ -12,6 +12,19 @@
 
 ActiveRecord::Schema.define(:version => 20110820161150) do
 
+  create_table "_action_files_cache", :id => false, :force => true do |t|
+    t.integer "file_id"
+    t.integer "action_id",                :default => 0, :null => false
+    t.string  "action_type", :limit => 1
+    t.integer "commit_id"
+  end
+
+  create_table "_temp_log", :force => true do |t|
+    t.text     "rev",    :limit => 16777215
+    t.datetime "date"
+    t.binary   "object", :limit => 2147483647
+  end
+
   create_table "action_files", :id => false, :force => true do |t|
     t.integer "file_id"
     t.integer "action_id",                :default => 0, :null => false
@@ -25,7 +38,6 @@ ActiveRecord::Schema.define(:version => 20110820161150) do
     t.integer "commit_id"
     t.integer "branch_id"
     t.string  "current_file_path"
-    t.text    "patch",             :limit => 2147483647
   end
 
   add_index "actions", ["commit_id"], :name => "commit_id"
@@ -182,11 +194,12 @@ ActiveRecord::Schema.define(:version => 20110820161150) do
   add_index "hunks", ["file_id", "commit_id", "old_start_line", "old_end_line", "new_start_line", "new_end_line"], :name => "file_id", :unique => true
 
   create_table "patches", :force => true do |t|
-    t.integer "commit_id"
+    t.integer "commit_id",                       :null => false
+    t.integer "file_id",                         :null => false
     t.text    "patch",     :limit => 2147483647
   end
 
-  add_index "patches", ["commit_id"], :name => "commit_id"
+  add_index "patches", ["commit_id", "file_id"], :name => "commit_id", :unique => true
 
   create_table "people", :force => true do |t|
     t.string "name"
@@ -216,6 +229,7 @@ ActiveRecord::Schema.define(:version => 20110820161150) do
   add_index "scmlog", ["is_bug_fix", "repository_id", "commit_date"], :name => "is_bug_fix_2"
   add_index "scmlog", ["is_bug_fix"], :name => "is_bug_fix"
   add_index "scmlog", ["repository_id"], :name => "repository_id"
+  add_index "scmlog", ["rev"], :name => "rev", :length => {"rev"=>"40"}
 
   create_table "tag_revisions", :force => true do |t|
     t.integer "tag_id"
@@ -227,13 +241,16 @@ ActiveRecord::Schema.define(:version => 20110820161150) do
   end
 
   create_table "user_feedbacks", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "commit_id"
-    t.boolean  "buggy"
-    t.boolean  "is_bug_fix"
+    t.integer  "user_id",                       :null => false
+    t.integer  "commit_id",                     :null => false
+    t.boolean  "buggy",      :default => false
+    t.boolean  "is_bug_fix", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "user_feedbacks", ["commit_id"], :name => "index_user_feedbacks_on_commit_id"
+  add_index "user_feedbacks", ["user_id", "commit_id"], :name => "index_user_feedbacks_on_user_id_and_commit_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "name"

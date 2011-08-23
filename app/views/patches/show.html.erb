@@ -7,6 +7,7 @@
 	<h3>Bug Introducing Changes</h3>
 	<% for p in @patch.bug_introducing_patches %>
 	<%= render :partial => 'form', :locals => {:patch => p.patch}%>
+	<br/>
 	<% end %>	
 </div>
 

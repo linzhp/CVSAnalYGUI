@@ -6,6 +6,10 @@
     <th>Repository Type</th>
   </tr>
 
+  <tr>
+  	<td><%= link_to 'Lucene', repository_path('lucene')%></td>
+  	<td align="center">git</td>
+  </tr>
 <% @repositories.each do |repository| %>
   <tr>
     <td><%= link_to repository.name, repository %></td>

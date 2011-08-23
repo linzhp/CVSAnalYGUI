@@ -1,3 +1,4 @@
+<p id="notice"><%= notice %></p>
 <h4>Commit Log</h4>
 <p><%= @cmt.message %></p>
 
@@ -17,12 +18,25 @@
 </table>
 <p><%= will_paginate @actions %></p>
 
-<%= form_for @cmt do |f| %>
-	Is Bug Fix? <%= f.radio_button :is_bug_fix, true %>Yes&nbsp;<%= f.radio_button :is_bug_fix, false %>No
+<p>
+	<%= @cmt.num_buggy_feedbacks %> user(s) thought this is a buggy commit.<br/>
+	<%= @cmt.num_not_buggy_feedbacks %> user(s) thought this is not a buggy commit.
+</p>
+<p>
+	<%= @cmt.num_fix_feedbacks %> user(s) thought this is a bug fix.<br/>
+	<%= @cmt.num_not_fix_feedbacks %> user(s) thought this is not a bug fix.	
+</p>
+What do you think?
+<%= form_for @feedback do |f| %>
+	Is Bug Fix? <%= f.radio_button :is_bug_fix, true %>Yes&nbsp;<%= f.radio_button :is_bug_fix, false %>No<br/>
+	Is Buggy Commit? <%= f.radio_button :buggy, true %>Yes&nbsp;<%= f.radio_button :buggy, false %>No<br/>
+	<%= f.hidden_field :commit_id %>
+	<%= f.hidden_field :user_id %>
 	<%= f.submit 'Save', {:name => 'submit'}%>
 <% end %>
 
 <% if @cmt.is_bug_fix %>
+	<h4>This commit is classified as bug fix</h4>
 	<% if @cmt.bug_introducing_commits.empty? %>
 		No Bug Introducing Commits found.
 	<% else %>
@@ -36,6 +50,7 @@
 <% end %>
 
 <% if @cmt.is_buggy %>
+	<h4>This commit is classified as buggy</h4>
 	<h4>Bug Fixing Commits</h4>
 	<ul>
 	<% @cmt.bug_fixing_commits.each do |c| %>

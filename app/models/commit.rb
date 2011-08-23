@@ -5,6 +5,7 @@ class Commit < ActiveRecord::Base
   belongs_to :repository
   has_many :hunk_blames, :foreign_key => 'bug_commit_id'
   has_many :hunks
+  has_many :user_feedbacks
   
   def is_buggy
     bug_fixing_commits.size > 0
@@ -33,5 +34,21 @@ class Commit < ActiveRecord::Base
       end
     end
     @bi_commits.to_a
+  end
+  
+  def num_buggy_feedbacks
+    user_feedbacks.select{|uf| uf.buggy}.size
+  end
+  
+  def num_not_buggy_feedbacks
+    user_feedbacks.select{|uf| not uf.buggy}.size
+  end
+
+  def num_fix_feedbacks
+    user_feedbacks.select{|uf| uf.is_bug_fix}.size
+  end
+
+  def num_not_fix_feedbacks
+    user_feedbacks.select{|uf| not uf.is_bug_fix}.size
   end
 end

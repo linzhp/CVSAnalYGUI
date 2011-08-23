@@ -4,16 +4,19 @@ class CommitsController < ApplicationController
   def show
     @actions = Action.paginate(:page => params[:page], :per_page => 10, :conditions=>{:commit_id => params[:id]})
     @cmt = Commit.find(params[:id])
+    user_id = session[:user_id]
+    unless user_id
+      redirect_to :users
+    end
+    @feedback = UserFeedback.find(:first, :conditions=>{:commit_id=>params[:id], :user_id=>user_id})
+    unless @feedback
+      @feedback = UserFeedback.new(:commit_id=>params[:id], :user_id=>user_id)
+    end
   end
 
   # PUT /commits/1
   # PUT /commits/1.xml
   def update
-    user_id = session[:user_id]
-    unless user_id
-      redirect_to :users
-    end
-    feedback = UserFeedback.find(:first, :conditions=>{:commit_id=>params[:id], :user_id=>user_id})
     feedback.is_bug_fix = params[:commit][:is_bug_fix]
 
     respond_to do |format|
