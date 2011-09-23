@@ -15,9 +15,9 @@ class UserFeedbacksController < ApplicationController
   
   def next_commit
     feedback_value = nil
-    if @feedback.is_buggy] and @feedback.is_bug_fix
+    if @feedback.buggy and @feedback.is_bug_fix
       feedback_value = 'is_both'
-    elsif @feedback.is_buggy
+    elsif @feedback.buggy
       feedback_value = 'is_buggy'
     elsif @feedback.is_bug_fix
       feedback_value = 'is_bug_fix'
@@ -33,6 +33,6 @@ class UserFeedbacksController < ApplicationController
     json = Net::HTTP.get("backend.drshivaji.com",
     "/process_feedback/user_id/#{@feedback.user_id}/rev_hash/#{commit.rev}/feedback_value/#{feedback_value}/project_name/#{project_name}/")
     rev = ActiveSupport::JSON.decode(json)["next_revision"]
-    commit = Commit.where(:rev => rev)
+    commit = Commit.find(:first, :conditions=>{:rev => rev})
   end
 end
