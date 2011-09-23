@@ -30,8 +30,10 @@ class UserFeedbacksController < ApplicationController
     if project_name.start_with?('lucene')
       project_name = 'lucene'
     end
-    json = Net::HTTP.get("backend.drshivaji.com",
-    "/process_feedback/user_id/#{@feedback.user_id}/rev_hash/#{commit.rev}/feedback_value/#{feedback_value}/project_name/#{project_name}/")
+    path = "/process_feedback/user_id/#{@feedback.user_id}/rev_hash/#{commit.rev}/feedback_value/#{feedback_value}/project_name/#{project_name}/"
+    logger.info path 
+    json = Net::HTTP.get("backend.drshivaji.com", path)
+    logger.info json
     rev = ActiveSupport::JSON.decode(json)["next_revision"]
     commit = Commit.find(:first, :conditions=>{:rev => rev})
   end
