@@ -11,7 +11,14 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-
+  <div id="prompt">
+  <% if session[:next_commits] and session[:next_commits].size>0%>
+  	Please look at these commits next
+  <% end %>
+  </div>
+  <ul id="next_commits">
+  	<%=render(session[:next_commits].to_a) if session[:next_commits]%>
+  </ul>
 <%= yield %>
 
 </body>

@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+
 <h4>Commit Log</h4>
 <p><%= @cmt.message %></p>
 
@@ -32,6 +33,9 @@ Do you think:
 	<%= f.hidden_field :user_id %>
 	<%= f.submit 'Save', {:name => 'submit'}%>
 <% end %>
+<%= button_to 'Get Next Commit', backend_process_user_feedback_path(@feedback.id), 
+	:method=>:post, :remote => true, :disabled => !@feedback.persisted? %>
+	Please wait after clicking this button, it can take up to 2 minutes
 
 <% if @cmt.is_bug_fix %>
 	<h4>This commit is classified as bug fix</h4>

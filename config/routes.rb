@@ -1,5 +1,9 @@
 Feedback::Application.routes.draw do
-  resources :user_feedbacks
+  resources :user_feedbacks do
+    member do
+      post 'backend_process'
+    end
+  end
   
   resources :patches
 
