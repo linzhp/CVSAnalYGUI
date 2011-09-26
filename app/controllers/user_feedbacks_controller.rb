@@ -36,13 +36,16 @@ class UserFeedbacksController < ApplicationController
     http.read_timeout=500
     res = http.get(path)
     if res.class == Net::HTTPOK
-      @json = res.read_body
-      logger.info @json
-      rev = ActiveSupport::JSON.decode(@json)["next_revision"]
+      json = res.read_body
+      logger.info json
+      rev = ActiveSupport::JSON.decode(json)["next_revision"]
       commit = Commit.find(:first, :conditions=>{:rev => rev})
       session[:next_commits] = Set.new unless session[:next_commits]
       session[:next_commits] << commit
       logger.debug session[:next_commits].size
+      
+      session[:jsons] = Array.new unless session[:jsons]
+      session[:jsons] << json
     else
       render :js => "alert('Get next commit failed because: #{res.inspect}');"      
     end

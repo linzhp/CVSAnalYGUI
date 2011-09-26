@@ -19,6 +19,9 @@
   <ul id="next_commits">
   	<%=render(session[:next_commits].to_a) if session[:next_commits]%>
   </ul>
+  <div id="jsons">
+  	<%= session[:jsons].inspect %>
+  </div>
 <%= yield %>
 
 </body>

@@ -1,5 +1,5 @@
-# page.replace_html('next_commits', render(session[:next_commits].to_a))
-# if session[:next_commits] and session[:next_commits].size>0
-  # page.replace_html('prompt', 'Please look at these commits next')   
-# end
-page.replace_html('next_commits', "JSON returned from backend: #{@json}")
+page.replace_html('next_commits', render(session[:next_commits].to_a))
+if session[:next_commits] and session[:next_commits].size>0
+  page.replace_html('prompt', 'Please look at these commits next')   
+end
+page.replace_html('jsons', session[:jsons].inspect)
