@@ -32,15 +32,19 @@ class UserFeedbacksController < ApplicationController
     end
     path = "/process_feedback/user_id/#{feedback.user_id}/rev_hash/#{commit.rev}/feedback_value/#{feedback_value}/project_name/#{project_name}/"
     logger.info path 
-    json = Net::HTTP.get("backend.drshivaji.com", path)
-    logger.info json
-    rev = ActiveSupport::JSON.decode(json)["next_revision"]
-    commit = Commit.find(:first, :conditions=>{:rev => rev})
-    session[:next_commits] = Set.new unless session[:next_commits]
-    session[:next_commits] << commit
-    logger.debug session[:next_commits].size
-    respond_to do |format|
-      format.js
+    http = Net::HTTP.new("67.169.175.131",8000)
+    http.read_timeout=500
+    res = http.get(path)
+    if res.class == Net::HTTPOK
+      json = res.read_body
+      logger.info json
+      rev = ActiveSupport::JSON.decode(json)["next_revision"]
+      commit = Commit.find(:first, :conditions=>{:rev => rev})
+      session[:next_commits] = Set.new unless session[:next_commits]
+      session[:next_commits] << commit
+      logger.debug session[:next_commits].size
+    else
+      render :js => "alert('Get next commit failed because: #{res.inspect}');"      
     end
   end
 end
