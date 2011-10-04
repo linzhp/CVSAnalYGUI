@@ -3,21 +3,26 @@
 <h4>Commit Log</h4>
 <p><%= @cmt.message %></p>
 
-<table>
-	<tr>
-		<th>Type</th>
-		<th>File</th>
-	</tr>
-<% @actions.each do |action|%>
-	<tr>
-		<td align="center"><%= action.action_type %></td>
-		<td align="center" style="word-break: break-all">
-			<%= link_to action.current_file_path, patch_path(action.patch) %>
-		</td>
-	</tr>
+<% unless @actions.empty? %>
+	<table>
+		<tr>
+			<th>Type</th>
+			<th>File</th>
+		</tr>
+	<% @actions.each do |action|%>
+		<tr>
+			<td align="center"><%= action.action_type %></td>
+			<td align="center" style="word-break: break-all">
+				<%= link_to action.current_file_path, patch_path(action.patch) %>
+			</td>
+		</tr>
+	<% end %>
+	</table>
+	<p><%= will_paginate @actions %></p>
+<% else %>
+	<h4>No Java file is changed in this commit</h4>
 <% end %>
-</table>
-<p><%= will_paginate @actions %></p>
+
 
 Do you think:
 <%= form_for @feedback do |f| %>
