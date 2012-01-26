@@ -20,7 +20,7 @@
   	<%=render(session[:next_commits].to_a) if session[:next_commits]%>
   </ul>
   <div id="jsons">
-  	<%= session[:jsons].inspect %>
+  	<%= session[:jsons].inspect if session[:jsons] %>
   </div>
 <%= yield %>
 

@@ -1,10 +1,25 @@
+<script type="text/javascript">
+	function toggle_java(){
+		var java_only = document.getElementById("java_only").checked;
+		var table = document.getElementById("actions");
+		var rows = table.rows;
+		for(i=1; i<rows.length; i++){
+			var file_path = rows[i].cells[1].childNodes[1].innerHTML;
+			var subfix_pos = file_path.lastIndexOf(".java");
+			if(subfix_pos <= 0 || subfix_pos != file_path.length-5){
+				rows[i].style.visibility = java_only ? "hidden" : "visible";
+			}
+		}
+	}
+</script>
+
 <p id="notice"><%= notice %></p>
 
 <h4>Commit Log</h4>
 <p><%= @cmt.message %></p>
 
 <% unless @actions.empty? %>
-	<table>
+	<table id="actions">
 		<tr>
 			<th>Type</th>
 			<th>File</th>
@@ -19,8 +34,13 @@
 	<% end %>
 	</table>
 	<p><%= will_paginate @actions %></p>
+	<p>
+		<form>
+			<input type="checkbox" id="java_only" onclick="toggle_java()" /> Show Java files only
+		</form>
+	</p>
 <% else %>
-	<h4>No Java file is changed in this commit</h4>
+	<h4>No file was changed in this commit</h4>
 <% end %>
 
 

@@ -3,7 +3,7 @@ class CommitsController < ApplicationController
   # GET /commits/1
   def show
     @actions = Action.paginate(:page => params[:page], :per_page => 10,
-     :conditions=>["commit_id=? AND current_file_path LIKE '%.java'", params[:id]])
+     :conditions=>["commit_id=?", params[:id]])
     @cmt = Commit.find(params[:id])
     session[:next_commits].delete(@cmt) if session[:next_commits]
     user_id = session[:user_id]
