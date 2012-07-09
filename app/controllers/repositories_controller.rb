@@ -17,7 +17,9 @@ class RepositoriesController < ApplicationController
       @commits = Commit.paginate(:page => params[:page],
         :conditions=>"repository_id in (select id from repositories where name like 'lucene%')",
         :order=>:author_date)
+      @repository = Repository.new :name => 'Lucene'
     else
+      @repository = Repository.find params[:id]
       @commits = Commit.paginate(:page => params[:page],
         :conditions=>{:repository_id => params[:id]},
         :order=>:author_date)
