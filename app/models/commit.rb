@@ -1,4 +1,5 @@
 require 'set'
+require 'will_paginate/array'
 
 class Commit < ActiveRecord::Base
   set_table_name 'scmlog'
@@ -37,10 +38,15 @@ class Commit < ActiveRecord::Base
   end
   
   def snapshot page=1
-    actions = Action.select("file_id, max(commit_id) commit_id").
-      where("commit_id<=?", id).
-      group("file_id").
-      paginate(:page => page)
-    actions.map{|a| a.content}.compact
+    cache_key = "commit_#{id}_snapshot"
+    files = Rails.cache.read(cache_key)
+    unless files
+      actions = Action.select("file_id, max(commit_id) commit_id").
+        where("commit_id<=?", id).
+        group("file_id")
+      files = actions.map{|a| a.content}.compact
+      Rails.cache.write(cache_key, files)
+    end
+    files.paginate :page=>page
   end
 end

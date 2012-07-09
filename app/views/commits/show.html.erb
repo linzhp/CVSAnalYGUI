@@ -15,8 +15,12 @@
 
 <p id="notice"><%= notice %></p>
 
+<%= link_to "Back to #{@cmt.repository.name}", @cmt.repository %>
+
 <h4>Commit Log</h4>
 <p><%= @cmt.message %></p>
+
+<p><%= link_to 'Suggested Fix Keywords', suggestion_path(@cmt.id) %></p>
 
 <% unless @actions.empty? %>
 	<table id="actions">

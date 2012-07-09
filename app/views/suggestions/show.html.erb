@@ -1,0 +1,7 @@
+<h3>Snapshot of Files @ revision <%= link_to @commit.id, @commit %></h3>
+<ul>
+<% @files.each do |f| %>
+	<li><%= link_to f.path, content_path(f) %></li>
+<% end %>
+</ul>
+<p><%= will_paginate @files %></p>

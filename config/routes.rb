@@ -15,7 +15,11 @@ Feedback::Application.routes.draw do
   
   resources :actions
   
-  match 'commts/:commit_id/files/:file_id' => 'content#show', :as => :content
+  resources :content
+  
+  resources :suggestions
+  
+  # match 'commts/:commit_id/files/:file_id' => 'content#show', :as => :content
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

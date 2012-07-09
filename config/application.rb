@@ -38,5 +38,7 @@ module Feedback
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+    
+    config.cache_store = :memory_store
   end
 end
