@@ -23,8 +23,7 @@ gem 'mysql'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
-# gem 'will_paginate', '>= 3.0.pre'
-gem 'will_paginate', :git => 'git://github.com/mislav/will_paginate.git'
+gem 'will_paginate'
 gem 'factory_girl_rails'
 
 # Bundle gems for the local environment. Make sure to

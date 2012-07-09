@@ -8,4 +8,6 @@ FactoryGirl.define do
   factory :hunk_blame
   
   factory :repository
+  
+  factory :patch
 end
