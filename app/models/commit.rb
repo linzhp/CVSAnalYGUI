@@ -36,4 +36,11 @@ class Commit < ActiveRecord::Base
     @bi_commits.to_a
   end
   
+  def snapshot page=1
+    actions = Action.select("file_id, max(commit_id) commit_id").
+      where("commit_id<=?", id).
+      group("file_id").
+      paginate(:page => page)
+    actions.map{|a| a.content}.compact
+  end
 end

@@ -10,4 +10,8 @@ FactoryGirl.define do
   factory :repository
   
   factory :patch
+  
+  factory :action
+  
+  factory :content
 end
