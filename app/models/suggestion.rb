@@ -9,6 +9,7 @@ class Suggestion
   def self.find_by_rev hash_str
     db = LevelDB::DB.new Rails.application.config.leveldb_dir
     json = db[hash_str]
+    return nil unless json
     data = ActiveSupport::JSON.decode json
     suggestion = Suggestion.new
     suggestion.predicted_keywords = data['predicted_keywords']
