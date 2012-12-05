@@ -24,5 +24,6 @@ Feedback::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   
   config.log_level = :debug
+  config.leveldb_dir = "#{Rails.root}/db/all.db"
 end
 
