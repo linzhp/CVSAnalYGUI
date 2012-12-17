@@ -49,22 +49,24 @@
 
 
 Do you think:
+
 <%= form_for @feedback do |f| %>
 <ul>
 	<li>
 		This is a Bug Fix? <%= f.radio_button :is_bug_fix, true %>Yes&nbsp;<%= f.radio_button :is_bug_fix, false %>No<br/>
 	</li>
 	<li>
-		This is buggy? <%= f.radio_button :buggy, true %>Yes&nbsp;<%= f.radio_button :buggy, false %>No<br/>		
+		This is buggy? <%= f.radio_button :buggy, true %>Yes&nbsp;<%= f.radio_button :buggy, false %>No<br/>
 	</li>
 </ul>
 	<%= f.hidden_field :commit_id %>
 	<%= f.hidden_field :user_id %>
 	<%= f.submit 'Save', {:name => 'submit'}%>
 <% end %>
-<%= button_to 'Get Next Commit', backend_process_user_feedback_path(@feedback.id), 
+
+<%#= button_to 'Get Next Commit', backend_process_user_feedback_path(@feedback.id),
 	:method=>:post, :remote => true, :disabled => !@feedback.persisted? %>
-	Please wait after clicking this button, it can take up to 2 minutes
+<!--	Please wait after clicking this button, it can take up to 2 minutes -->
 
 <% if @cmt.is_bug_fix %>
 	<h4>This commit is classified as bug fix</h4>
