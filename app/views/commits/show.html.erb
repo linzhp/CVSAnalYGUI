@@ -20,7 +20,17 @@
 <h4>Commit Log</h4>
 <p><%= @cmt.message %></p>
 
-<p><%= link_to 'Suggested Fix Keywords', suggestion_path(@cmt.id) %></p>
+<h2>Suggestions</h2>
+<% if @suggestion %>
+    <p><b>Predicted keywords</b>: <%= @suggestion.predicted_keywords.join ', '%></p>
+    <p><b>Precision</b>: <%= @suggestion.precision%></p>
+    <p><b>Recall</b>: <%= @suggestion.recall %></p>
+    <p><b>F-measure</b>: <%= @suggestion.f_measure%></p>
+<% else %>
+    No suggestion
+<% end %>
+
+<p><%= link_to 'Repository Snapshot', suggestion_path(@cmt.id) %></p>
 
 <% unless @actions.empty? %>
 	<table id="actions">

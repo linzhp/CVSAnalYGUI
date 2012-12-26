@@ -5,6 +5,7 @@ class CommitsController < ApplicationController
     @actions = Action.paginate(:page => params[:page], :per_page => 10,
      :conditions=>["commit_id=?", params[:id]])
     @cmt = Commit.find(params[:id])
+    @suggestion = Suggestion.find_by_rev @cmt.rev
     session[:next_commits].delete(@cmt) if session[:next_commits]
     user_id = session[:user_id]
     unless user_id
