@@ -10,7 +10,7 @@
 
 <% @commits.each do |commit| %>
   <tr>
-    <td align="center"><%= link_to commit.id, commit %></td>
+    <td align="center"><%= link_to commit.id, commit,:target=>"_blank" %></td>
     <td><%= commit.author_date %></td>
     <td align="center"><%= commit.is_bug_fix %></td>
   </tr>

@@ -42,7 +42,7 @@
 		<tr>
 			<td align="center"><%= action.action_type %></td>
 			<td align="center" style="word-break: break-all">
-				<%= link_to action.current_file_path, patch_path(action.patch) %>
+				<%= link_to action.current_file_path, patch_path(action.patch), :target=>"_blank" %>
 			</td>
 		</tr>
 	<% end %>
@@ -85,7 +85,7 @@ Do you think:
 		<h4>Bug Introducing Commits</h4>
 		<ul>
 		<% @cmt.bug_introducing_commits.each do |c| %>
-			<li><%= link_to c.id, c%></li>
+			<li><%= link_to c.id, c, :target=>"_blank"%></li>
 		<% end %>		
 		</ul>
 	<% end %>
@@ -96,7 +96,7 @@ Do you think:
 	<h4>Bug Fixing Commits</h4>
 	<ul>
 	<% @cmt.bug_fixing_commits.each do |c| %>
-		<li><%= link_to c.id, c%></li>
+		<li><%= link_to c.id, c, :target=>"_blank"%></li>
 	<% end %>		
 	</ul>
 <% end %>
