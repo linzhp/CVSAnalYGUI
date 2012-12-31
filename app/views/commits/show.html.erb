@@ -21,8 +21,13 @@
 <p><%= @cmt.message %></p>
 
 <h2>Suggestions</h2>
+
+<!-- Organize keyword suggestions -->
+
+
 <% if @suggestion %>
     <p><b>Predicted keywords</b>: <%= @suggestion.predicted_keywords.join ', '%></p>
+    <p><b>Predicted Comment keywords</b>: <%= @suggestion.comment_keywords.join ', '%></p>
     <p><b>Precision</b>: <%= @suggestion.precision%></p>
     <p><b>Recall</b>: <%= @suggestion.recall %></p>
     <p><b>F-measure</b>: <%= @suggestion.f_measure%></p>
