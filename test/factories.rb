@@ -14,4 +14,6 @@ FactoryGirl.define do
   factory :action
   
   factory :content
+  
+  factory :file, :class => SourceFile
 end

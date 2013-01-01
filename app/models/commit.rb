@@ -39,14 +39,16 @@ class Commit < ActiveRecord::Base
   
   def snapshot page=1
     cache_key = "commit_#{id}_snapshot"
-    files = Rails.cache.read(cache_key)
-    unless files
-      actions = Action.select("file_id, max(commit_id) commit_id").
-        where("commit_id<=?", id).
-        group("file_id")
-      files = actions.map{|a| a.content}.compact
-      Rails.cache.write(cache_key, files)
+    contents = nil #  Rails.cache.read(cache_key)
+    unless contents
+      all_files = SourceFile.where(:repository_id => repository_id)
+      contents = all_files.map do |f| 
+        a = f.last_action_before_commit(id)
+        a.content if a
+      end
+      contents.compact!
+      Rails.cache.write(cache_key, contents)
     end
-    files.paginate :page=>page
+    contents.paginate :page=>page
   end
 end
