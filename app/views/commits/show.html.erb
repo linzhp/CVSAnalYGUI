@@ -20,17 +20,57 @@
 <h4>Commit Log</h4>
 <p><%= @cmt.message %></p>
 
+<h2>Directions</h2>
+
+<p>The technique looks at the change history for a project and can predict if a new code change is bug inducing or clean. The Fix Suggester
+based on the bug prediction engine suggests keywords which are likely to be present in the bug fix. The technique is purely statistical
+and based on data mining. It is experimental. We would like to gather your thoughts on the Fix Suggester.
+</p>
+
+For a selected code, do not attempt to do BOTH RQ1 and RQ2, perform one or the other.
+
+<p>
+RQ1:
+Allowing subjects to the look at the bug fix changelog, can one validate if the predicted keywords are relevant to the actual bug fix?
+<ol>
+  <li>Not Helpful - The predicted keywords did not intersect with the actual bug fix at all.</li>
+  <li>Somewhat Helpful - The predicted keywords partially intersect with the actual bug fix.</li>
+  <li>Helpful - The predicted keywords intersect with the key portions of the bug fix.</li>
+
+</ol>
+</p>
+
+<p>
+RQ2:
+When reviewing the bug fix changelog for a different set of changes than the previous experiment,
+what are your selected keywords for the bug fix before viewing Fix Suggestions?
+  <ul>
+    <li>How about after viewing Fix Suggestions?</li>
+    <li>Does your candidate keyword list change?</li>
+  </ul>
+<ol>
+  <li>Not Helpful - My candidate keyword list was unaffected.</li>
+  <li>Somewhat Helpful - My candidate keyword list changed somewhat due to the Fix Suggestions.</li>
+  <li>Helpful - My candidate keyword list was influenced by the Fix Suggestions.</li>
+
+</ol>
+</p>
 <h2>Suggestions</h2>
 
 <!-- Organize keyword suggestions -->
 
 
 <% if @suggestion %>
+    <ul>
+      <li>Precision is the likelihood that suggested keywords will be used in a bug fix (based on past code change history)</li>
+      <li>Recall is the probability that all our suggestions (including those not shown) cover the actual bug fix content (based on past code change history)</li>
+    </ul>
+
     <p><b>Predicted keywords</b>: <%= @suggestion.predicted_keywords.join ', '%></p>
     <p><b>Predicted Comment keywords</b>: <%= @suggestion.comment_keywords.join ', '%></p>
-    <p><b>Precision</b>: <%= @suggestion.precision%></p>
-    <p><b>Recall</b>: <%= @suggestion.recall %></p>
-    <p><b>F-measure</b>: <%= @suggestion.f_measure%></p>
+    <p><b>Precision</b>: <%= @suggestion.precision %>%</p>
+    <p><b>Recall</b>: <%= @suggestion.recall %>%</p>
+    <p><b>F-measure</b>: <%= @suggestion.f_measure %>%</p>
 <% else %>
     No suggestion
 <% end %>
